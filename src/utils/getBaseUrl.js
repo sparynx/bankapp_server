@@ -1,5 +1,5 @@
 const getBaseUrl = () => {
-    return "http://localhost:5000";
+    return "https://bankapp-frontend-3.onrender.com";
 }
 
 export default getBaseUrl;
