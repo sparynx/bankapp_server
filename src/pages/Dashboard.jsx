@@ -186,27 +186,18 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900">
+    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 h-full w-full fixed overflow-auto">
       {/* Header */}
       <header className="p-6">
         <div className="flex justify-between items-center mb-6">
-          {/* <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-4">
             <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center">
               <User size={20} className="text-white" />
             </div>
             <div>
               <h1 className="text-white/60 text-sm font-light">{greeting}</h1>
-              <p className="text-white font-bold text-lg">{userName}</p>
             </div>
-          </div> */}
-          <div className="flex items-center space-x-4">
-  <div className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center">
-    <User size={20} className="text-white" />
-  </div>
-  <div>
-    <h1 className="text-white/60 text-sm font-light">{greeting}</h1>
-  </div>
-</div>
+          </div>
           <div className="flex items-center space-x-4">
             <button className="w-10 h-10 bg-white/10 backdrop-blur-md rounded-full flex items-center justify-center">
               <Bell size={20} className="text-white" />
@@ -221,7 +212,7 @@ const Dashboard = () => {
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-6 space-y-6">
+      <main className="container mx-auto px-4 py-6 space-y-6 pb-24">
         {/* Account Section */}
         {hasAccount ? (
           <div className="space-y-6">
@@ -340,97 +331,96 @@ const Dashboard = () => {
         )}
 
         {/* Create Account Modal */}
-{/* Create Account Modal */}
-    {showCreateAccount && (
-      <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-        <div className="bg-gradient-to-b from-gray-900 to-indigo-900 rounded-2xl p-6 w-full max-w-md border border-indigo-500/30">
-          <h2 className="text-2xl font-bold text-white mb-6">Create Your Account</h2>
-          
-          <div className="space-y-6">
-            {/* Account Name Field */}
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Account Name
-              </label>
-              <input
-                type="text"
-                value={accountName}
-                onChange={(e) => setAccountName(e.target.value)}
-                placeholder="Enter account name"
-                className="w-full bg-white/10 border border-indigo-500/30 rounded-xl px-4 py-3 
-                         text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              />
-            </div>
+        {showCreateAccount && (
+          <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-gradient-to-b from-gray-900 to-indigo-900 rounded-2xl p-6 w-full max-w-md border border-indigo-500/30">
+              <h2 className="text-2xl font-bold text-white mb-6">Create Your Account</h2>
+              
+              <div className="space-y-6">
+                {/* Account Name Field */}
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Account Name
+                  </label>
+                  <input
+                    type="text"
+                    value={accountName}
+                    onChange={(e) => setAccountName(e.target.value)}
+                    placeholder="Enter account name"
+                    className="w-full bg-white/10 border border-indigo-500/30 rounded-xl px-4 py-3 
+                             text-white placeholder-white/50 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  />
+                </div>
 
-            {/* Account Type Field */}
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Select Account Type
-              </label>
-              <select
-                value={accountType}
-                onChange={(e) => setAccountType(e.target.value)}
-                className="w-full bg-white/10 border border-indigo-500/30 rounded-xl px-4 py-3 
-                         text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                <option value="savings">Savings Account</option>
-                <option value="checking">Checking Account</option>
-              </select>
-            </div>
+                {/* Account Type Field */}
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Select Account Type
+                  </label>
+                  <select
+                    value={accountType}
+                    onChange={(e) => setAccountType(e.target.value)}
+                    className="w-full bg-white/10 border border-indigo-500/30 rounded-xl px-4 py-3 
+                             text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="savings">Savings Account</option>
+                    <option value="checking">Checking Account</option>
+                  </select>
+                </div>
 
-            {/* Currency Field */}
-            <div>
-              <label className="block text-sm font-medium text-white/80 mb-2">
-                Select Currency
-              </label>
-              <select
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                className="w-full bg-white/10 border border-indigo-500/30 rounded-xl px-4 py-3 
-                         text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
-              >
-                <option value="NGN">NGN - Nigerian Naira</option>
-                <option value="EUR">EUR - Euro</option>
-                <option value="GBP">GBP - British Pound</option>
-              </select>
-            </div>
+                {/* Currency Field */}
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Select Currency
+                  </label>
+                  <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="w-full bg-white/10 border border-indigo-500/30 rounded-xl px-4 py-3 
+                             text-white focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                  >
+                    <option value="NGN">NGN - Nigerian Naira</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                  </select>
+                </div>
 
-            {/* Action Buttons */}
-            <div className="flex space-x-4">
-              {accounts.length > 0 && (
-                <button
-                  onClick={() => setShowCreateAccount(false)}
-                  className="flex-1 px-4 py-3 border border-indigo-500/30 rounded-xl text-white/70 
-                           hover:bg-indigo-600/20 transition-all hover:scale-105"
-                >
-                  Cancel
-                </button>
-              )}
-              <button
-                onClick={handleCreateAccount}
-                disabled={isCreating}
-                className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 rounded-xl 
-                         hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 
-                         disabled:opacity-50 disabled:hover:scale-100
-                         disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-              >
-                {isCreating ? (
-                  <div className="flex items-center space-x-2">
-                    <RefreshCw size={20} className="animate-spin" />
-                    <span>Creating...</span>
-                  </div>
-                ) : (
-                  <>
-                    <span>Create Account</span>
-                    <ArrowRight size={20} />
-                  </>
-                )}
-              </button>
+                {/* Action Buttons */}
+                <div className="flex space-x-4">
+                  {accounts.length > 0 && (
+                    <button
+                      onClick={() => setShowCreateAccount(false)}
+                      className="flex-1 px-4 py-3 border border-indigo-500/30 rounded-xl text-white/70 
+                               hover:bg-indigo-600/20 transition-all hover:scale-105"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                  <button
+                    onClick={handleCreateAccount}
+                    disabled={isCreating}
+                    className="flex-1 bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-3 rounded-xl 
+                             hover:from-indigo-700 hover:to-purple-700 transition-all hover:scale-105 
+                             disabled:opacity-50 disabled:hover:scale-100
+                             disabled:cursor-not-allowed flex items-center justify-center space-x-2"
+                  >
+                    {isCreating ? (
+                      <div className="flex items-center space-x-2">
+                        <RefreshCw size={20} className="animate-spin" />
+                        <span>Creating...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <span>Create Account</span>
+                        <ArrowRight size={20} />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
-      </div>
-    )}
+        )}
       </main>
     </div>
   );
