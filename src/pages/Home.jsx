@@ -100,7 +100,7 @@ const Home = () => {
                     </div>
                   </div>
                   <p className="text-white/60 text-xs mb-1">Balance</p>
-                  <p className="text-3xl font-bold mb-6">$24,350<span className="text-xs text-white/60">.75</span></p>
+                  <p className="text-3xl font-bold mb-6">NGN 24,350<span className="text-xs text-white/60">.75</span></p>
                   
                   <div className="grid grid-cols-3 gap-3 mb-6">
                     <div className="bg-white/5 rounded-xl p-3 flex flex-col items-center">
