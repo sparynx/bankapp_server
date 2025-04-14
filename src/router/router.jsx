@@ -7,6 +7,7 @@ import Dashboard from "../pages/Dashboard";
 import Profile from "../pages/Profile";
 import TransferPage from "../pages/TransferPage";
 import TransactionHistory from "../pages/TransactionHistory";
+import NotFound from "../component/NotFound";
 
 
 const router = createBrowserRouter([
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
             {
                 path: "/history",
                 element: <TransactionHistory/>
+            },
+            {
+                path: "*",
+                element: <NotFound/>
             }
         ]
     }
