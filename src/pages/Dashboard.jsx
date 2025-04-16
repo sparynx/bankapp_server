@@ -17,13 +17,11 @@ import {
   Bell,
   AlertTriangle,
   PieChart,
-  Landmark,
   RefreshCw,
   ChevronRight,
-  Activity,
+  ArrowUpRight,
   BarChart3,
-  DollarSign,
-  Settings
+  ShieldCheck
 } from 'lucide-react';
 import Swal from 'sweetalert2';
 
@@ -50,15 +48,7 @@ const Dashboard = () => {
       ? `Good afternoon, ${userName}` 
       : `Good evening, ${userName}`;
 
-  // Debug logging
   useEffect(() => {
-    console.log('Raw data:', data);
-    console.log('Extracted accounts:', accounts);
-    if (accountsError) {
-      console.error('Error fetching accounts:', accountsError);
-    }
-    
-    // If user has no account, show create account modal
     if (!isLoadingAccounts && !accountsError && accounts.length === 0) {
       setShowCreateAccount(true);
     }
@@ -73,7 +63,7 @@ const Dashboard = () => {
           title: 'Account Name Required',
           text: 'Please enter an account name.',
           showConfirmButton: true,
-          confirmButtonColor: '#6366f1',
+          confirmButtonColor: '#3b82f6',
         });
         return;
       }
@@ -85,7 +75,7 @@ const Dashboard = () => {
           title: 'Account Limit',
           text: 'You already have an active account.',
           showConfirmButton: true,
-          confirmButtonColor: '#6366f1',
+          confirmButtonColor: '#3b82f6',
         });
         setShowCreateAccount(false);
         return;
@@ -99,12 +89,10 @@ const Dashboard = () => {
         initialBalance: 5000 // Default balance
       }).unwrap();
       
-      console.log('Account created:', result);
-      
       setShowCreateAccount(false);
       setAccountName(''); // Reset account name
       
-      // Show success notification using SweetAlert2
+      // Show success notification
       Swal.fire({
         icon: 'success',
         title: 'Success',
@@ -113,7 +101,7 @@ const Dashboard = () => {
         timer: 3000,
         position: 'top-end',
         toast: true,
-        background: '#10b981',
+        background: '#22c55e',
         color: '#ffffff',
         customClass: {
           popup: 'animated slideInRight'
@@ -123,7 +111,6 @@ const Dashboard = () => {
       // Refetch accounts to update the list
       refetch();
     } catch (error) {
-      console.error('Failed to create account:', error);
       // Show error notification
       Swal.fire({
         icon: 'error',
@@ -148,7 +135,7 @@ const Dashboard = () => {
       text: "You will be logged out of your account",
       icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: '#6366f1',
+      confirmButtonColor: '#3b82f6',
       cancelButtonColor: '#d1d5db',
       confirmButtonText: 'Yes, logout',
       cancelButtonText: 'Cancel'
@@ -162,10 +149,10 @@ const Dashboard = () => {
 
   if (isLoadingAccounts) {
     return (
-      <div className="fixed inset-0 bg-slate-900 flex items-center justify-center">
-        <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 flex items-center justify-center space-x-3">
-          <RefreshCw size={24} className="text-indigo-400 animate-spin" />
-          <div className="text-white font-medium">Loading your account...</div>
+      <div className="fixed inset-0 bg-gradient-to-br from-indigo-950 via-purple-900 to-violet-900 flex items-center justify-center">
+        <div className="bg-white/10 backdrop-blur-md rounded-xl p-6 flex items-center justify-center space-x-3">
+          <RefreshCw size={24} className="text-white animate-spin" />
+          <div className="text-white">Loading your account...</div>
         </div>
       </div>
     );
@@ -173,15 +160,14 @@ const Dashboard = () => {
 
   if (accountsError) {
     return (
-      <div className="fixed inset-0 bg-slate-900 flex items-center justify-center">
-        <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 max-w-md mx-auto text-white text-center">
+      <div className="fixed inset-0 bg-gradient-to-br from-indigo-950 via-purple-900 to-violet-900 flex items-center justify-center">
+        <div className="bg-white/10 backdrop-blur-md rounded-xl p-8 max-w-md mx-auto text-white text-center">
           <AlertTriangle size={48} className="text-red-400 mx-auto mb-4" />
           <h2 className="text-2xl font-bold mb-4">Error Loading Account</h2>
-          <p className="mb-6 text-gray-300">{accountsError.message || 'Unable to load your account. Please try again.'}</p>
+          <p className="mb-6">{accountsError.message || 'Unable to load your account. Please try again.'}</p>
           <button 
             onClick={() => refetch()}
-            className="bg-indigo-600 text-white font-medium py-3 px-6 rounded-xl 
-                     hover:bg-indigo-700 transition-all hover:scale-105"
+            className="bg-blue-500 text-white font-semibold py-3 px-6 rounded-lg hover:bg-blue-400 transition-all"
           >
             Try Again
           </button>
@@ -191,322 +177,284 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 h-full w-full fixed overflow-auto">
-      <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:24px_24px] pointer-events-none"></div>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-black/5 to-black/20 pointer-events-none"></div>
-      
-      {/* Side Navigation */}
-      <aside className="fixed left-0 top-0 h-full w-16 md:w-20 bg-white/5 backdrop-blur-lg border-r border-white/10 flex flex-col items-center py-8 z-10">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center mb-10">
-          <Wallet size={20} className="text-white" />
-        </div>
-        
-        <div className="flex-1 flex flex-col items-center space-y-6">
-          <button className="w-12 h-12 rounded-xl bg-indigo-500/20 hover:bg-indigo-500/30 flex items-center justify-center text-indigo-300 hover:text-white transition-all">
-            <DollarSign size={20} />
-          </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all">
-            <Activity size={20} />
-          </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all">
-            <BarChart3 size={20} />
-          </button>
-          <button className="w-12 h-12 rounded-xl bg-white/5 hover:bg-white/10 flex items-center justify-center text-gray-400 hover:text-white transition-all">
-            <Settings size={20} />
-          </button>
-        </div>
-        
-        <button 
-          onClick={handleLogout}
-          className="w-12 h-12 rounded-xl bg-white/5 hover:bg-red-500/20 flex items-center justify-center text-gray-400 hover:text-red-400 transition-all"
-        >
-          <LogOut size={20} />
-        </button>
-      </aside>
+    <div className="fixed inset-0 bg-gradient-to-br from-indigo-950 via-purple-900 to-violet-900 text-white overflow-y-auto">
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMykiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-40"></div>
+        <div className="absolute top-1/4 -left-24 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl"></div>
+        <div className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full bg-indigo-500/5 blur-3xl"></div>
+      </div>
 
-      {/* Main Content */}
-      <div className="ml-16 md:ml-20">
-        {/* Header */}
-        <header className="p-6 sticky top-0 z-10 backdrop-blur-md bg-slate-900/50 border-b border-white/10">
-          <div className="flex justify-between items-center">
-            <div>
-              <h1 className="text-white text-lg font-medium">{greeting}</h1>
-              <p className="text-gray-400 text-sm">Welcome to your personal finance dashboard</p>
-            </div>
-            <div className="flex items-center space-x-4">
-              <button className="w-10 h-10 bg-white/5 rounded-full flex items-center justify-center text-gray-400 hover:text-white hover:bg-white/10 transition-all">
-                <Bell size={20} />
-              </button>
-              <div className="w-10 h-10 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center">
-                <User size={16} className="text-white" />
-              </div>
+      {/* Header */}
+      <header className="relative px-6 pt-8 pb-4">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center">
+            <h1 className="text-3xl font-bold tracking-tight flex items-center">
+              <span className="text-blue-400 mr-1">Ọ</span><span>wọ́</span>
+            </h1>
+          </div>
+          <div className="flex items-center space-x-3">
+            <button className="w-10 h-10 bg-white/5 border border-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/10 transition-all">
+              <Bell size={18} className="text-white/80" />
+            </button>
+            <button
+              onClick={handleLogout}
+              className="w-10 h-10 bg-white/5 border border-white/10 backdrop-blur-md rounded-full flex items-center justify-center hover:bg-white/10 transition-all"
+            >
+              <LogOut size={18} className="text-white/80" />
+            </button>
+            <div className="w-10 h-10 bg-blue-500/10 backdrop-blur-md rounded-full flex items-center justify-center">
+              <User size={18} className="text-blue-400" />
             </div>
           </div>
-        </header>
+        </div>
+      </header>
 
-        <main className="container mx-auto px-4 py-6 space-y-8 pb-24">
-          {hasAccount ? (
-            <div className="space-y-8">
-              {/* Main Account Card */}
-              <div className="bg-gradient-to-r from-indigo-600 to-purple-600 rounded-2xl p-1 overflow-hidden">
-                <div className="bg-gradient-to-br from-indigo-800/50 to-purple-800/50 backdrop-blur-lg rounded-xl p-6 text-white relative overflow-hidden">
-                  {/* Decorative elements */}
-                  <div className="absolute -top-16 -right-16 w-64 h-64 bg-white/10 rounded-full blur-3xl"></div>
-                  <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-500/20 rounded-full blur-xl"></div>
-                  <div className="absolute top-1/2 left-1/3 w-24 h-24 bg-indigo-500/20 rounded-full blur-xl"></div>
-                  
-                  <div className="flex justify-between items-start mb-10 relative">
-                    <div>
-                      <p className="text-white/60 text-sm uppercase tracking-wider">
-                        {accounts[0]?.accountName}
-                      </p>
-                      <p className="text-4xl font-bold mt-2">
-                        {accounts[0]?.currency} {accounts[0]?.balance.toLocaleString()}
-                      </p>
-                      <div className="flex items-center mt-2">
-                        <p className="text-white/60 text-sm font-mono tracking-wider">
-                          **** **** **** {accounts[0]?.accountNumber.slice(-4)}
-                        </p>
-                        <div className="flex items-center ml-3 bg-white/10 px-2 py-1 rounded-full">
-                          <div className="w-2 h-2 rounded-full bg-green-400 mr-1"></div>
-                          <span className="text-xs text-white/80">Active</span>
-                        </div>
-                      </div>
-                    </div>
-                    <div className="bg-white/10 p-3 rounded-xl backdrop-blur-md">
-                      <CreditCard className="text-white" size={24} />
-                    </div>
-                  </div>
+      <main className="relative px-6 pb-24">
+        {/* Greeting Section */}
+        <div className="mb-8">
+          <h2 className="text-2xl font-bold text-white">{greeting}</h2>
+          <p className="text-white/60">Manage your finances with ease</p>
+        </div>
 
-                  {/* Quick Actions */}
-                  <div className="grid grid-cols-3 gap-4">
-                    <button
-                      onClick={() => navigate('/transfer')}
-                      className="flex flex-col items-center p-4 bg-white/10 rounded-xl backdrop-blur-md 
-                               hover:bg-white/20 transition-all hover:scale-105"
-                    >
-                      <Send size={22} className="text-white mb-2" />
-                      <span className="text-sm font-medium">Send</span>
-                    </button>
-                    <button
-                      onClick={() => navigate('/history')}
-                      className="flex flex-col items-center p-4 bg-white/10 rounded-xl backdrop-blur-md 
-                               hover:bg-white/20 transition-all hover:scale-105"
-                    >
-                      <History size={22} className="text-white mb-2" />
-                      <span className="text-sm font-medium">History</span>
-                    </button>
-                    <button
-                      onClick={() => navigate('/profile')}
-                      className="flex flex-col items-center p-4 bg-white/10 rounded-xl backdrop-blur-md 
-                               hover:bg-white/20 transition-all hover:scale-105"
-                    >
-                      <User size={22} className="text-white mb-2" />
-                      <span className="text-sm font-medium">Profile</span>
-                    </button>
-                  </div>
+        {/* Account Section */}
+        {hasAccount ? (
+          <div className="space-y-8">
+            {/* Main Account Card */}
+            <div className="bg-gradient-to-br from-blue-600/30 to-indigo-600/30 backdrop-blur-md border border-white/10 rounded-2xl p-6 relative overflow-hidden">
+              <div className="absolute top-0 right-0 w-64 h-64 bg-blue-400/5 rounded-full -translate-y-1/3 translate-x-1/3"></div>
+              
+              <div className="flex justify-between items-start mb-8 relative">
+                <div>
+                  <p className="text-white/60 text-sm uppercase tracking-wider font-light">
+                    {accounts[0]?.accountType} Account
+                  </p>
+                  <h3 className="text-xl font-medium mt-1">{accounts[0]?.accountName}</h3>
+                  <p className="text-3xl font-bold mt-2">
+                    {accounts[0]?.currency} {accounts[0]?.balance.toLocaleString()}
+                  </p>
+                  <p className="text-white/60 text-sm mt-2 font-mono tracking-wider">
+                    **** **** **** {accounts[0]?.accountNumber?.slice(-4) || '1234'}
+                  </p>
+                </div>
+                <div className="w-12 h-12 bg-blue-500/20 rounded-full flex items-center justify-center">
+                  <CreditCard className="text-blue-400" size={24} />
                 </div>
               </div>
 
-              {/* Dashboard Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {/* Financial Insights Card */}
-                <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 text-white border border-white/10 hover:border-indigo-500/30 transition-all">
-                  <h2 className="text-lg font-semibold mb-4 flex items-center text-indigo-200">
-                    <PieChart size={18} className="mr-2" />
-                    Financial Insights
-                  </h2>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-indigo-500/10 transition-all cursor-pointer">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-green-500/20 rounded-full flex items-center justify-center mr-3">
-                          <Landmark size={16} className="text-green-300" />
-                        </div>
-                        <span className="text-sm font-medium">Savings Goal Progress</span>
-                      </div>
-                      <ChevronRight size={16} className="text-indigo-300" />
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-indigo-500/10 transition-all cursor-pointer">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
-                          <History size={16} className="text-blue-300" />
-                        </div>
-                        <span className="text-sm font-medium">Recent Transactions</span>
-                      </div>
-                      <ChevronRight size={16} className="text-indigo-300" />
-                    </div>
-                    <div className="flex items-center justify-between p-3 bg-white/5 rounded-xl hover:bg-indigo-500/10 transition-all cursor-pointer">
-                      <div className="flex items-center">
-                        <div className="w-8 h-8 bg-purple-500/20 rounded-full flex items-center justify-center mr-3">
-                          <PieChart size={16} className="text-purple-300" />
-                        </div>
-                        <span className="text-sm font-medium">Spending Analysis</span>
-                      </div>
-                      <ChevronRight size={16} className="text-indigo-300" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Activity Summary */}
-                <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-6 text-white border border-white/10 hover:border-indigo-500/30 transition-all">
-                  <h2 className="text-lg font-semibold mb-4 flex items-center text-indigo-200">
-                    <Activity size={18} className="mr-2" />
-                    Activity Summary
-                  </h2>
-                  
-                  <div className="space-y-4">
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 rounded-full bg-green-400"></div>
-                        <span className="text-sm">Income</span>
-                      </div>
-                      <span className="text-sm font-medium">65%</span>
-                    </div>
-                    <div className="w-full bg-white/10 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-green-400 to-green-600 h-2 rounded-full" style={{ width: '65%' }}></div>
-                    </div>
-                    
-                    <div className="flex items-center justify-between mt-4">
-                      <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 rounded-full bg-purple-400"></div>
-                        <span className="text-sm">Expenses</span>
-                      </div>
-                      <span className="text-sm font-medium">35%</span>
-                    </div>
-                    <div className="w-full bg-white/10 rounded-full h-2">
-                      <div className="bg-gradient-to-r from-purple-400 to-purple-600 h-2 rounded-full" style={{ width: '35%' }}></div>
-                    </div>
-                    
-                    <button className="w-full mt-4 py-2 bg-white/10 rounded-xl text-sm font-medium text-indigo-200 hover:bg-indigo-500/20 transition-all">
-                      View Detailed Report
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          ) : (
-            // No Account State
-            <div className="flex items-center justify-center h-screen">
-              <div className="bg-white/5 backdrop-blur-lg rounded-2xl p-8 max-w-md mx-auto border border-white/10 relative overflow-hidden">
-                {/* Decorative elements */}
-                <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500/10 rounded-full -translate-y-1/2 translate-x-1/2 blur-xl"></div>
-                <div className="absolute bottom-0 left-0 w-24 h-24 bg-purple-500/10 rounded-full translate-y-1/2 -translate-x-1/2 blur-xl"></div>
-                
-                <div className="w-16 h-16 bg-gradient-to-br from-indigo-500 to-purple-500 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <Wallet size={32} className="text-white" />
-                </div>
-                
-                <h2 className="text-white text-2xl font-bold mb-3 text-center">Start Your Journey</h2>
-                <p className="text-gray-300 mb-8 text-center">
-                  Create your account and begin your financial journey with us. You'll receive a welcome bonus of 5,000!
-                </p>
-                
+              {/* Quick Actions */}
+              <div className="grid grid-cols-3 gap-3">
                 <button
-                  onClick={() => setShowCreateAccount(true)}
-                  className="bg-gradient-to-r from-indigo-500 to-purple-600 text-white font-semibold py-4 px-6 rounded-xl 
-                           flex items-center justify-center space-x-2 hover:from-indigo-600 hover:to-purple-700 
-                           transition-all hover:scale-105 w-full"
+                  onClick={() => navigate('/transfer')}
+                  className="flex flex-col items-center justify-center py-3 px-2 bg-white/5 border border-white/5 rounded-xl backdrop-blur-sm 
+                             hover:bg-white/10 transition-all"
                 >
-                  <Plus size={20} />
-                  <span>Create Account</span>
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mb-2">
+                    <Send size={14} className="text-blue-400" />
+                  </div>
+                  <span className="text-xs font-medium">Send</span>
+                </button>
+                <button
+                  onClick={() => navigate('/history')}
+                  className="flex flex-col items-center justify-center py-3 px-2 bg-white/5 border border-white/5 rounded-xl backdrop-blur-sm 
+                             hover:bg-white/10 transition-all"
+                >
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mb-2">
+                    <History size={14} className="text-blue-400" />
+                  </div>
+                  <span className="text-xs font-medium">History</span>
+                </button>
+                <button
+                  onClick={() => navigate('/profile')}
+                  className="flex flex-col items-center justify-center py-3 px-2 bg-white/5 border border-white/5 rounded-xl backdrop-blur-sm 
+                             hover:bg-white/10 transition-all"
+                >
+                  <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mb-2">
+                    <User size={14} className="text-blue-400" />
+                  </div>
+                  <span className="text-xs font-medium">Profile</span>
                 </button>
               </div>
             </div>
-          )}
 
-          {/* Create Account Modal */}
-          {showCreateAccount && (
-            <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 z-50">
-              <div className="bg-gradient-to-b from-slate-900 to-indigo-950 rounded-2xl p-8 w-full max-w-md border border-indigo-500/30 shadow-xl shadow-indigo-900/20">
-                <h2 className="text-2xl font-bold text-white mb-6">Create Your Account</h2>
-                
-                <div className="space-y-6">
-                  {/* Account Name Field */}
-                  <div>
-                    <label className="block text-sm font-medium text-indigo-200 mb-2">
-                      Account Name
-                    </label>
-                    <input
-                      type="text"
-                      value={accountName}
-                      onChange={(e) => setAccountName(e.target.value)}
-                      placeholder="Enter account name"
-                      className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 
-                               text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                    />
-                  </div>
-
-                  {/* Account Type Field */}
-                  <div>
-                    <label className="block text-sm font-medium text-indigo-200 mb-2">
-                      Select Account Type
-                    </label>
-                    <select
-                      value={accountType}
-                      onChange={(e) => setAccountType(e.target.value)}
-                      className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 
-                               text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                    >
-                      <option value="savings">Savings Account</option>
-                      <option value="checking">Checking Account</option>
-                    </select>
-                  </div>
-
-                  {/* Currency Field */}
-                  <div>
-                    <label className="block text-sm font-medium text-indigo-200 mb-2">
-                      Select Currency
-                    </label>
-                    <select
-                      value={currency}
-                      onChange={(e) => setCurrency(e.target.value)}
-                      className="w-full bg-white/5 border border-indigo-500/30 rounded-xl px-4 py-3 
-                               text-white focus:outline-none focus:ring-2 focus:ring-indigo-500/50"
-                    >
-                      <option value="NGN">NGN - Nigerian Naira</option>
-                      <option value="EUR">EUR - Euro</option>
-                      <option value="GBP">GBP - British Pound</option>
-                    </select>
-                  </div>
-
-                  {/* Action Buttons */}
-                  <div className="flex space-x-4">
-                    {accounts.length > 0 && (
-                      <button
-                        onClick={() => setShowCreateAccount(false)}
-                        className="flex-1 px-4 py-3 border border-indigo-500/30 rounded-xl text-gray-300 
-                                 hover:bg-indigo-600/20 transition-all hover:scale-105"
-                      >
-                        Cancel
-                      </button>
-                    )}
-                    <button
-                      onClick={handleCreateAccount}
-                      disabled={isCreating}
-                      className="flex-1 bg-gradient-to-r from-indigo-500 to-purple-600 text-white px-4 py-3 rounded-xl 
-                               hover:from-indigo-600 hover:to-purple-700 transition-all hover:scale-105 
-                               disabled:opacity-50 disabled:hover:scale-100
-                               disabled:cursor-not-allowed flex items-center justify-center space-x-2"
-                    >
-                      {isCreating ? (
-                        <div className="flex items-center space-x-2">
-                          <RefreshCw size={20} className="animate-spin" />
-                          <span>Creating...</span>
-                        </div>
-                      ) : (
-                        <>
-                          <span>Create Account</span>
-                          <ArrowRight size={20} />
-                        </>
-                      )}
+            {/* Activity & Insights Section */}
+            <div className="space-y-6">
+              <h3 className="text-xl font-semibold">Activity & Insights</h3>
+              
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* Recent Activity */}
+                <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-medium flex items-center">
+                      <History size={16} className="mr-2 text-blue-400" />
+                      Recent Activity
+                    </h4>
+                    <button className="text-sm text-white/60 hover:text-white flex items-center">
+                      View All <ChevronRight size={14} className="ml-1" />
                     </button>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    {/* Empty state or placeholder transactions */}
+                    <div className="text-center py-6 text-white/40">
+                      <BarChart3 size={24} className="mx-auto mb-2" />
+                      <p>No recent transactions</p>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Financial Insights */}
+                <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-xl p-5">
+                  <div className="flex items-center justify-between mb-4">
+                    <h4 className="font-medium flex items-center">
+                      <PieChart size={16} className="mr-2 text-blue-400" />
+                      Financial Insights
+                    </h4>
+                    <button className="text-sm text-white/60 hover:text-white flex items-center">
+                      Details <ChevronRight size={14} className="ml-1" />
+                    </button>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="bg-white/5 rounded-lg p-3 flex items-center justify-between hover:bg-white/10 transition-all cursor-pointer">
+                      <div className="flex items-center">
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
+                          <PieChart size={14} className="text-blue-400" />
+                        </div>
+                        <span className="text-sm">Spending Analysis</span>
+                      </div>
+                      <ArrowUpRight size={14} className="text-white/60" />
+                    </div>
+                    
+                    <div className="bg-white/5 rounded-lg p-3 flex items-center justify-between hover:bg-white/10 transition-all cursor-pointer">
+                      <div className="flex items-center">
+                        <div className="w-8 h-8 bg-blue-500/20 rounded-full flex items-center justify-center mr-3">
+                          <ShieldCheck size={14} className="text-blue-400" />
+                        </div>
+                        <span className="text-sm">Security Settings</span>
+                      </div>
+                      <ArrowUpRight size={14} className="text-white/60" />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          )}
-        </main>
-      </div>
+          </div>
+        ) : (
+          // No Account State
+          <div className="flex justify-center items-center py-12">
+            <div className="bg-white/5 border border-white/10 backdrop-blur-md rounded-2xl p-8 max-w-md w-full">
+              <div className="w-16 h-16 bg-blue-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Wallet size={32} className="text-blue-400" />
+              </div>
+              
+              <h2 className="text-2xl font-bold text-center mb-3">Start Your Journey</h2>
+              <p className="text-white/70 text-center mb-8">
+                Create your first account and begin your financial journey with a welcome bonus of 5,000!
+              </p>
+              
+              <button
+                onClick={() => setShowCreateAccount(true)}
+                className="bg-blue-500 text-white w-full font-medium py-3 px-6 rounded-lg flex items-center justify-center hover:bg-blue-400 transition-all"
+              >
+                <Plus size={18} className="mr-2" />
+                <span>Create Your Account</span>
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Create Account Modal */}
+        {showCreateAccount && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-4 z-50">
+            <div className="bg-gradient-to-br from-indigo-950 to-violet-900 rounded-2xl p-6 w-full max-w-md border border-white/10">
+              <h2 className="text-2xl font-bold text-white mb-6">Create Your Account</h2>
+              
+              <div className="space-y-5">
+                {/* Account Name Field */}
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Account Name
+                  </label>
+                  <input
+                    type="text"
+                    value={accountName}
+                    onChange={(e) => setAccountName(e.target.value)}
+                    placeholder="Enter account name"
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 
+                             text-white placeholder-white/40 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  />
+                </div>
+
+                {/* Account Type Field */}
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Account Type
+                  </label>
+                  <select
+                    value={accountType}
+                    onChange={(e) => setAccountType(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 
+                             text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="savings">Savings Account</option>
+                    <option value="checking">Checking Account</option>
+                  </select>
+                </div>
+
+                {/* Currency Field */}
+                <div>
+                  <label className="block text-sm font-medium text-white/80 mb-2">
+                    Currency
+                  </label>
+                  <select
+                    value={currency}
+                    onChange={(e) => setCurrency(e.target.value)}
+                    className="w-full bg-white/5 border border-white/10 rounded-lg px-4 py-3 
+                             text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  >
+                    <option value="NGN">NGN - Nigerian Naira</option>
+                    <option value="EUR">EUR - Euro</option>
+                    <option value="GBP">GBP - British Pound</option>
+                  </select>
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex space-x-4 pt-4">
+                  {accounts.length > 0 && (
+                    <button
+                      onClick={() => setShowCreateAccount(false)}
+                      className="flex-1 px-4 py-3 border border-white/10 rounded-lg text-white/70 
+                               hover:bg-white/5 transition-all"
+                    >
+                      Cancel
+                    </button>
+                  )}
+                  <button
+                    onClick={handleCreateAccount}
+                    disabled={isCreating}
+                    className="flex-1 bg-blue-500 text-white px-4 py-3 rounded-lg 
+                             hover:bg-blue-400 transition-all
+                             disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center"
+                  >
+                    {isCreating ? (
+                      <div className="flex items-center space-x-2">
+                        <RefreshCw size={18} className="animate-spin" />
+                        <span>Creating...</span>
+                      </div>
+                    ) : (
+                      <>
+                        <span>Create Account</span>
+                        <ArrowRight size={18} className="ml-2" />
+                      </>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
+      </main>
     </div>
   );
 };
