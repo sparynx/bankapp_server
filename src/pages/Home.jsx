@@ -168,8 +168,17 @@ const Home = () => {
         </section>
 
         {/* Footer */}
-        <footer className="w-full text-center text-white/60 text-sm mt-auto pt-6 border-t border-white/10">
+        <footer className="w-full text-center text-white/60 text-sm mt-auto pt-6 border-t border-white/10 mb-6">
+          <div className="max-w-6xl mx-auto">
+            <p className="mb-2">Follow us on:</p>
+            <div className="flex justify-center space-x-4 mb-4">
+              <a href="#" className="text-white/70 hover:text-white/100 transition-all">Twitter</a>
+              <a href="#" className="text-white/70 hover:text-white/100 transition-all">Facebook</a>
+              <a href="#" className="text-white/70 hover:text-white/100 transition-all">LinkedIn</a>
+            </div>
+            <p>Built with ❤️ by the Ọwọ́ team</p>
           <p>© 2025 Ọwọ́. All rights reserved.</p>
+          </div>
         </footer>
       </div>
     </div>
