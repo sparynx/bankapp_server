@@ -185,7 +185,7 @@ const Profile = () => {
   // Loading skeleton UI
   if (isLoadingUser || isLoadingAccounts) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 p-6">
+      <div className="min-h-screen w-full bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 p-6 absolute top-0 left-0">
         <div className="flex items-center space-x-4 mb-8">
           <div className="w-10 h-10 bg-white/10 rounded-full animate-pulse"></div>
           <div className="h-6 w-32 bg-white/10 rounded animate-pulse"></div>
@@ -215,7 +215,7 @@ const Profile = () => {
   // Error state
   if (userError && userError.status !== 401) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 flex items-center justify-center p-4">
+      <div className="min-h-screen w-full bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 flex items-center justify-center p-4 absolute top-0 left-0">
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-8 text-white max-w-lg mx-auto text-center">
           <div className="w-20 h-20 bg-red-500/20 rounded-full flex items-center justify-center mx-auto mb-6">
             <AlertTriangle size={32} className="text-red-300" />
@@ -234,7 +234,7 @@ const Profile = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900">
+    <div className="min-h-screen w-full bg-gradient-to-br from-indigo-900 via-purple-800 to-blue-900 absolute top-0 left-0 flex flex-col">
       {/* Header */}
       <header className="p-6 sticky top-0 z-10 backdrop-blur-md bg-indigo-900/50">
         <div className="flex items-center space-x-4 max-w-lg mx-auto">
@@ -250,7 +250,7 @@ const Profile = () => {
       </header>
 
       {/* Main content */}
-      <main className="container mx-auto px-4 py-4 max-w-lg">
+      <main className="container mx-auto px-4 py-4 max-w-lg flex-grow">
         <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 text-white relative overflow-hidden">
           {/* Background decoration */}
           <div className="absolute top-0 right-0 w-64 h-64 opacity-10">
