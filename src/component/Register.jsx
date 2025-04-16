@@ -88,7 +88,7 @@ const Register = () => {
       <div className="flex flex-col items-center px-4 py-8 min-h-screen justify-center">
         {/* Logo or App Name */}
         <div className="mb-6 text-center">
-          <h1 className="text-3xl font-bold tracking-tighter">SecureBank</h1>
+          <h1 className="text-3xl font-bold tracking-tighter">Owo</h1>
           <p className="text-white/70 mt-1">Your trusted financial partner</p>
         </div>
         
