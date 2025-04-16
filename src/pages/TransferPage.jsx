@@ -8,7 +8,7 @@ import {
   Loader2, 
   Send, 
   User, 
-  ChevronRight,
+  ChevronDown,
   KeyRound,
   CheckCircle2,
   Info,
@@ -17,8 +17,8 @@ import {
   ArrowLeft,
   X,
   Wallet,
-  CreditCard,
-  RefreshCw
+  RefreshCw,
+  ArrowRight
 } from 'lucide-react';
 import gsap from 'gsap';
 
@@ -261,10 +261,10 @@ const TransferPage = () => {
     };
   
     return (
-      <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 overflow-y-auto flex items-center justify-center p-4" ref={receiptRef}>
-        <div className="bg-white rounded-3xl shadow-2xl w-full max-w-sm my-8 overflow-hidden scale-100 animate-scaleIn">
+      <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 overflow-y-auto flex items-center justify-center p-4" ref={receiptRef}>
+        <div className="bg-gradient-to-br from-indigo-950 via-purple-900 to-violet-900 rounded-3xl shadow-2xl w-full max-w-sm my-8 overflow-hidden scale-100 animate-scaleIn border border-white/10">
           {/* Success Header */}
-          <div className="p-8 bg-gradient-to-r from-violet-600 to-indigo-600 relative">
+          <div className="p-8 bg-gradient-to-r from-blue-500 to-indigo-600 relative">
             <button
               className="absolute right-4 top-4 text-white/80 hover:text-white transition-colors"
               onClick={handleCloseReceipt}
@@ -275,10 +275,10 @@ const TransferPage = () => {
             <div className="flex flex-col items-center relative">
               <div className="bg-white/20 backdrop-blur-md rounded-full p-3 mb-4">
                 <div className="bg-white rounded-full p-2">
-                  <CheckCircle2 className="w-8 h-8 text-indigo-600" />
+                  <CheckCircle2 className="w-8 h-8 text-blue-500" />
                 </div>
               </div>
-              <h2 className="text-xl font-semibold text-white mb-2">Transfer Successful</h2>
+              <h2 className="text-xl font-bold text-white mb-2">Transfer Successful</h2>
               <div className="flex items-baseline text-white">
                 <span className="text-xl font-medium">{transactionReceipt.currency}</span>
                 <span className="text-4xl font-bold ml-1">{parseFloat(transactionReceipt.amount).toLocaleString()}</span>
@@ -292,12 +292,12 @@ const TransferPage = () => {
           {/* Receipt Details */}
           <div className="p-6 space-y-4">
             {/* Reference Number */}
-            <div className="flex justify-between items-center px-4 py-3 bg-gray-50 rounded-2xl">
-              <span className="text-gray-600 text-sm">Reference</span>
+            <div className="flex justify-between items-center px-4 py-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+              <span className="text-white/80 text-sm">Reference</span>
               <div className="flex items-center gap-2">
-                <span className="text-gray-800 text-sm font-medium">{transactionReceipt.reference}</span>
+                <span className="text-white text-sm font-medium">{transactionReceipt.reference}</span>
                 <button
-                  className="text-indigo-600 hover:text-indigo-700 p-1 rounded-md hover:bg-indigo-50 transition-colors"
+                  className="text-blue-400 hover:text-blue-300 p-1 rounded-md hover:bg-white/5 transition-colors"
                   onClick={handleCopyReference}
                 >
                   <Copy className="w-4 h-4" />
@@ -307,23 +307,23 @@ const TransferPage = () => {
   
             {/* Transfer Details */}
             <div className="grid grid-cols-2 gap-3">
-              <div className="px-4 py-3 bg-gray-50 rounded-2xl">
-                <span className="text-gray-500 text-xs">From</span>
-                <p className="text-gray-900 text-sm font-medium truncate">{transactionReceipt.senderName}</p>
-                <p className="text-gray-500 text-xs truncate">{transactionReceipt.senderAccount}</p>
+              <div className="px-4 py-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+                <span className="text-white/60 text-xs">From</span>
+                <p className="text-white text-sm font-medium truncate">{transactionReceipt.senderName}</p>
+                <p className="text-white/60 text-xs truncate">{transactionReceipt.senderAccount}</p>
               </div>
   
-              <div className="px-4 py-3 bg-gray-50 rounded-2xl">
-                <span className="text-gray-500 text-xs">To</span>
-                <p className="text-gray-900 text-sm font-medium truncate">{transactionReceipt.receiverName}</p>
-                <p className="text-gray-500 text-xs truncate">{transactionReceipt.receiverAccount}</p>
+              <div className="px-4 py-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+                <span className="text-white/60 text-xs">To</span>
+                <p className="text-white text-sm font-medium truncate">{transactionReceipt.receiverName}</p>
+                <p className="text-white/60 text-xs truncate">{transactionReceipt.receiverAccount}</p>
               </div>
             </div>
   
             {/* Status */}
-            <div className="flex justify-between items-center px-4 py-3 bg-gray-50 rounded-2xl">
-              <span className="text-gray-600 text-sm">Status</span>
-              <span className="px-3 py-1 bg-green-100 text-green-700 rounded-full text-xs font-medium">
+            <div className="flex justify-between items-center px-4 py-3 bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10">
+              <span className="text-white/80 text-sm">Status</span>
+              <span className="px-3 py-1 bg-green-500/20 text-green-300 rounded-full text-xs font-medium">
                 {transactionReceipt.status}
               </span>
             </div>
@@ -331,7 +331,7 @@ const TransferPage = () => {
             {/* Action Buttons */}
             <div className="space-y-3 pt-2">
               <button
-                className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white py-3 rounded-xl flex items-center justify-center space-x-2 hover:from-violet-700 hover:to-indigo-700 transition-all font-medium shadow-lg shadow-indigo-100"
+                className="w-full bg-blue-500 text-white py-3 rounded-xl flex items-center justify-center space-x-2 hover:bg-blue-400 transition-all font-medium"
                 onClick={handleShare}
               >
                 <Share2 className="w-4 h-4" />
@@ -339,7 +339,7 @@ const TransferPage = () => {
               </button>
   
               <button
-                className="w-full text-indigo-600 py-3 rounded-xl flex items-center justify-center space-x-2 hover:bg-indigo-50 transition-colors font-medium border border-indigo-100"
+                className="w-full bg-white/5 backdrop-blur-sm text-white py-3 rounded-xl flex items-center justify-center space-x-2 hover:bg-white/10 transition-colors font-medium border border-white/10"
                 onClick={handleCloseReceipt}
               >
                 <ArrowLeft className="w-4 h-4" />
@@ -353,30 +353,37 @@ const TransferPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/50" ref={pageRef}>
+    <div className="fixed inset-0 bg-gradient-to-br from-indigo-950 via-purple-900 to-violet-900 text-white overflow-y-auto" ref={pageRef}>
+      {/* Subtle background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute top-0 left-0 w-full h-full bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxkZWZzPjxwYXR0ZXJuIGlkPSJncmlkIiB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHBhdHRlcm5Vbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoIGQ9Ik0gNDAgMCBMIDAgMCAwIDQwIiBmaWxsPSJub25lIiBzdHJva2U9InJnYmEoMjU1LCAyNTUsIDI1NSwgMC4wMykiIHN0cm9rZS13aWR0aD0iMSIvPjwvcGF0dGVybj48L2RlZnM+PHJlY3Qgd2lkdGg9IjEwMCUiIGhlaWdodD0iMTAwJSIgZmlsbD0idXJsKCNncmlkKSIvPjwvc3ZnPg==')] opacity-40"></div>
+        <div className="absolute top-1/4 -left-24 w-64 h-64 rounded-full bg-blue-500/5 blur-3xl"></div>
+        <div className="absolute bottom-1/4 -right-32 w-80 h-80 rounded-full bg-indigo-500/5 blur-3xl"></div>
+      </div>
+
       {/* Main Container */}
-      <div className="max-w-lg mx-auto p-4 sm:p-6 pb-24" ref={transferFormRef}>
+      <div className="relative max-w-lg mx-auto p-6 pb-32" ref={transferFormRef}>
         {/* Header */}
-        <div className="flex items-center justify-between mb-6">
+        <div className="flex items-center justify-between mb-8">
           <div className="flex items-center space-x-3">
-            <div className="p-3 bg-gradient-to-br from-violet-500 to-indigo-600 rounded-2xl shadow-lg shadow-indigo-100">
-              <Send className="w-6 h-6 text-white" />
+            <div className="p-3 bg-blue-500/20 backdrop-blur-md rounded-2xl border border-blue-400/20">
+              <Send className="w-6 h-6 text-blue-400" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-gray-900">Send Money</h1>
-              <p className="text-sm text-gray-500">Fast and secure transfers</p>
+              <h1 className="text-2xl font-bold">Send Money</h1>
+              <p className="text-sm text-white/60">Fast and secure transfers</p>
             </div>
           </div>
         </div>
 
         {/* Warning Banner */}
         {showPinNotSetWarning && (
-          <div className="mb-6 p-4 bg-amber-50 border border-amber-100 rounded-2xl shadow-sm">
+          <div className="mb-6 p-4 bg-amber-500/10 backdrop-blur-sm border border-amber-500/20 rounded-2xl">
             <div className="flex items-start space-x-3">
-              <Info className="w-5 h-5 text-amber-500 mt-0.5 flex-shrink-0" />
+              <Info className="w-5 h-5 text-amber-400 mt-0.5 flex-shrink-0" />
               <div>
-                <h3 className="font-medium text-amber-800">Set Transaction PIN</h3>
-                <p className="text-sm text-amber-700 mt-1">
+                <h3 className="font-medium text-amber-300">Set Transaction PIN</h3>
+                <p className="text-sm text-amber-200/80 mt-1">
                   Please set up your transaction PIN before making transfers for enhanced security.
                 </p>
               </div>
@@ -387,47 +394,47 @@ const TransferPage = () => {
         {/* Main Form */}
         <form onSubmit={handleTransfer} className="space-y-6">
           {/* Source Account Section */}
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <label className="flex items-center text-sm font-medium text-gray-700 mb-3">
-              <Wallet className="w-4 h-4 text-indigo-500 mr-2" />
+          <div className="bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/10">
+            <label className="flex items-center text-sm font-medium text-white/80 mb-3">
+              <Wallet className="w-4 h-4 text-blue-400 mr-2" />
               <span>From Account</span>
             </label>
             
             {/* Custom Dropdown */}
             <div className="relative" ref={accountsDropdownRef}>
               <div 
-                className={`w-full p-4 border ${isDropdownOpen ? 'border-indigo-300 ring-2 ring-indigo-100' : 'border-gray-200'} rounded-2xl bg-gray-50 flex justify-between items-center cursor-pointer`}
+                className={`w-full p-4 border ${isDropdownOpen ? 'border-blue-400/30 ring-2 ring-blue-400/10' : 'border-white/10'} rounded-2xl bg-white/5 backdrop-blur-sm flex justify-between items-center cursor-pointer`}
                 onClick={toggleAccountsDropdown}  
               >
                 {selectedAccount ? (
                   <div className="flex flex-col">
-                    <span className="font-medium text-gray-800">
+                    <span className="font-medium">
                       {accounts.find(acc => acc.accountNumber === selectedAccount)?.accountType}
                     </span>
-                    <span className="text-sm text-gray-500">
+                    <span className="text-sm text-white/60">
                       {selectedAccount}
                     </span>
                   </div>
                 ) : (
-                  <span className="text-gray-400">Choose account</span>
+                  <span className="text-white/40">Choose account</span>
                 )}
-                <ChevronRight className={`w-5 h-5 text-gray-400 transition-transform ${isDropdownOpen ? 'rotate-90' : ''}`} />
+                <ChevronDown className={`w-5 h-5 text-white/60 transition-transform ${isDropdownOpen ? 'rotate-180' : ''}`} />
               </div>
               
               {isDropdownOpen && (
-                <div className="absolute z-10 w-full mt-2 bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
+                <div className="absolute z-10 w-full mt-2 bg-indigo-900/90 backdrop-blur-md rounded-2xl shadow-lg border border-white/10 overflow-hidden">
                   {accounts.map(account => (
                     <div 
                       key={account.accountNumber}
-                      className="p-4 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-0"
+                      className="p-4 hover:bg-white/5 cursor-pointer border-b border-white/10 last:border-0"
                       onClick={() => selectAccount(account.accountNumber)}  
                     >
                       <div className="flex items-start justify-between">
                         <div>
-                          <p className="font-medium text-gray-800">{account.accountType}</p>
-                          <p className="text-sm text-gray-500">{account.accountNumber}</p>
+                          <p className="font-medium">{account.accountType}</p>
+                          <p className="text-sm text-white/60">{account.accountNumber}</p>
                         </div>
-                        <span className="font-medium text-gray-800">₦ {account.balance.toLocaleString()}</span>
+                        <span className="font-medium">₦ {account.balance.toLocaleString()}</span>
                       </div>
                     </div>
                   ))}
@@ -436,13 +443,13 @@ const TransferPage = () => {
             </div>
 
             {formErrors.selectedAccount && (
-              <p className="mt-2 text-sm text-red-500">{formErrors.selectedAccount}</p>
+              <p className="mt-2 text-sm text-red-300">{formErrors.selectedAccount}</p>
             )}
 
             {selectedAccountDetails && (
-              <div className="mt-4 p-4 bg-gradient-to-r from-violet-500 to-indigo-600 rounded-2xl text-white">
+              <div className="mt-4 p-4 bg-gradient-to-r from-blue-500/20 to-indigo-500/20 backdrop-blur-sm rounded-2xl border border-blue-400/20">
                 <div className="flex items-center justify-between">
-                  <span className="text-sm opacity-90">Available Balance</span>
+                  <span className="text-sm text-white/80">Available Balance</span>
                   <span className="text-lg font-bold">
                     ₦ {selectedAccountDetails.balance.toLocaleString()}
                   </span>
@@ -452,9 +459,9 @@ const TransferPage = () => {
           </div>
 
           {/* Recipient Section */}
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <label className="flex items-center text-sm font-medium text-gray-700 mb-3">
-              <User className="w-4 h-4 text-indigo-500 mr-2" />
+          <div className="bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/10">
+            <label className="flex items-center text-sm font-medium text-white/80 mb-3">
+              <User className="w-4 h-4 text-blue-400 mr-2" />
               <span>To Account</span>
             </label>
             <div className="relative">
@@ -463,32 +470,32 @@ const TransferPage = () => {
                 value={receiverAccount}
                 onChange={handleReceiverAccountChange}
                 placeholder="Enter account number"
-                className="w-full p-4 border border-gray-200 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 transition-all"
+                className="w-full p-4 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm focus:ring-2 focus:ring-blue-400/20 focus:border-blue-400/30 transition-all text-white placeholder-white/40"
               />
               {verifying && (
                 <div className="absolute right-4 top-4">
-                  <RefreshCw className="w-5 h-5 text-indigo-400 animate-spin" />
+                  <RefreshCw className="w-5 h-5 text-blue-400 animate-spin" />
                 </div>
               )}
             </div>
 
             {verifiedAccount?.account ? (
-              <div className="mt-4 p-4 bg-green-50 rounded-2xl border border-green-100">
+              <div className="mt-4 p-4 bg-green-500/10 backdrop-blur-sm rounded-2xl border border-green-500/20">
                 <div className="flex items-start space-x-3">
-                  <CheckCircle2 className="w-5 h-5 text-green-500 mt-0.5" />
+                  <CheckCircle2 className="w-5 h-5 text-green-400 mt-0.5" />
                   <div>
-                    <p className="font-medium text-green-800">{verifiedAccount.account.accountName}</p>
-                    <p className="text-sm text-green-600">{verifiedAccount.account.accountType}</p>
+                    <p className="font-medium text-green-300">{verifiedAccount.account.accountName}</p>
+                    <p className="text-sm text-green-300/70">{verifiedAccount.account.accountType}</p>
                   </div>
                 </div>
               </div>
             ) : verificationError && receiverAccount.length >= 10 ? (
-              <div className="mt-4 p-4 bg-red-50 rounded-2xl border border-red-100">
+              <div className="mt-4 p-4 bg-red-500/10 backdrop-blur-sm rounded-2xl border border-red-500/20">
                 <div className="flex items-start space-x-3">
-                  <Info className="w-5 h-5 text-red-500 mt-0.5" />
+                  <Info className="w-5 h-5 text-red-400 mt-0.5" />
                   <div>
-                    <p className="font-medium text-red-800">Account not found</p>
-                    <p className="text-sm text-red-600">Please check the account number</p>
+                    <p className="font-medium text-red-300">Account not found</p>
+                    <p className="text-sm text-red-300/70">Please check the account number</p>
                   </div>
                 </div>
               </div>
@@ -496,8 +503,8 @@ const TransferPage = () => {
           </div>
 
           {/* Amount Section */}
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <label className="flex items-center text-sm font-medium text-gray-700 mb-3">
+          <div className="bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/10">
+            <label className="flex items-center text-sm font-medium text-white/80 mb-3">
               <NairaIcon />
               <span className="ml-2">Amount</span>
             </label>
@@ -507,20 +514,20 @@ const TransferPage = () => {
                 value={amount}
                 onChange={handleAmountChange}
                 placeholder="0.00"
-                className="w-full p-4 border border-gray-200 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 pl-14 text-2xl font-medium"
+                className="w-full p-4 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm focus:ring-2 focus:ring-blue-400/20 focus:border-blue-400/30 pl-14 text-2xl font-medium text-white placeholder-white/40"
               />
-              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 text-2xl font-medium">₦</div>
+              <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-white/60 text-2xl font-medium">₦</div>
             </div>
             
             {formErrors.amount && (
-              <p className="mt-2 text-sm text-red-500">{formErrors.amount}</p>
+              <p className="mt-2 text-sm text-red-300">{formErrors.amount}</p>
             )}
           </div>
 
           {/* PIN Section */}
-          <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
-            <label className="flex items-center text-sm font-medium text-gray-700 mb-3">
-              <KeyRound className="w-4 h-4 text-indigo-500 mr-2" />
+          <div className="bg-white/5 backdrop-blur-md p-6 rounded-3xl border border-white/10">
+            <label className="flex items-center text-sm font-medium text-white/80 mb-3">
+              <KeyRound className="w-4 h-4 text-blue-400 mr-2" />
               <span>Transaction PIN</span>
             </label>
             <input
@@ -529,33 +536,36 @@ const TransferPage = () => {
               onChange={handlePinChange}
               placeholder="• • • •"
               maxLength={4}
-              className="w-full p-4 border border-gray-200 rounded-2xl bg-gray-50 focus:ring-2 focus:ring-indigo-100 focus:border-indigo-300 text-xl tracking-widest letter-spacing-2 font-medium"
+              className="w-full p-4 border border-white/10 rounded-2xl bg-white/5 backdrop-blur-sm focus:ring-2 focus:ring-blue-400/20 focus:border-blue-400/30 text-xl tracking-widest letter-spacing-2 font-medium text-white placeholder-white/40"
             />
             
             {formErrors.pin && (
-              <p className="mt-2 text-sm text-red-500">{formErrors.pin}</p>
+              <p className="mt-2 text-sm text-red-300">{formErrors.pin}</p>
             )}
           </div>
 
-          {/* Submit Button - Fixed to bottom on mobile */}
-          <div className="fixed bottom-0 left-0 right-0 p-4 bg-white border-t border-gray-200 sm:relative sm:border-0 sm:bg-transparent sm:p-0 backdrop-blur-md z-10">
-            <button 
-              type="submit" 
-              disabled={transferring || !selectedAccount || !receiverAccount || !amount || !pin || showPinNotSetWarning}
-              className="w-full bg-gradient-to-r from-violet-600 to-indigo-600 text-white p-4 rounded-2xl flex items-center justify-center space-x-2 hover:from-violet-700 hover:to-indigo-700 disabled:opacity-50 disabled:cursor-not-allowed transition-all shadow-lg shadow-indigo-100"
-            >
-              {transferring ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  <span>Processing...</span>
-                </>
-              ) : (
-                <>
-                  <Send className="w-5 h-5" />
-                  <span className="font-medium">Send Money</span>
-                </>
-              )}
-            </button>
+          {/* Submit Button - Fixed to bottom */}
+          <div className="fixed bottom-0 left-0 right-0 p-6 backdrop-blur-lg bg-gradient-to-t from-indigo-950 to-transparent z-10">
+            <div className="max-w-lg mx-auto">
+              <button 
+                type="submit" 
+                disabled={transferring || !selectedAccount || !receiverAccount || !amount || !pin || showPinNotSetWarning}
+                className="w-full bg-blue-500 text-white p-4 rounded-2xl flex items-center justify-center space-x-2 hover:bg-blue-400 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+              >
+                {transferring ? (
+                  <>
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    <span>Processing...</span>
+                  </>
+                ) : (
+                  <>
+                    <Send className="w-5 h-5" />
+                    <span className="font-medium">Send Money</span>
+                    <ArrowRight className="w-5 h-5 ml-1" />
+                  </>
+                )}
+              </button>
+            </div>
           </div>
         </form>
       </div>

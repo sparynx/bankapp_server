@@ -160,9 +160,6 @@ const Home = () => {
                 <span>Create Free Account</span>
                 <ArrowRight size={18} className="ml-2" />
               </Link>
-              <Link to="/demo" className="bg-white/10 border border-white/10 text-white font-medium py-3 px-6 rounded-lg flex items-center justify-center hover:bg-white/15 transition-all">
-                Watch Demo
-              </Link>
             </div>
           </div>
         </section>
