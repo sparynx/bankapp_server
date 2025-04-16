@@ -203,8 +203,8 @@ const Home = () => {
                 <p className="text-sm text-white/70 mb-4">
                   Create unlimited virtual debit cards for online purchases with customizable spending limits and instant freeze options.
                 </p>
-                <Link to="/virtual-cards" className="inline-flex items-center text-blue-400 text-sm hover:text-blue-300">
-                  Learn more <ChevronRight size={16} className="ml-1" />
+                <Link to="/login" className="inline-flex items-center text-blue-400 text-sm hover:text-blue-300">
+                  Login  <ChevronRight size={16} className="ml-1" />
                 </Link>
               </div>
               
