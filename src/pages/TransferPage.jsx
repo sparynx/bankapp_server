@@ -545,7 +545,7 @@ const TransferPage = () => {
           </div>
 
           {/* Submit Button - Fixed to bottom */}
-          <div className="fixed bottom-0 left-0 right-0 p-6 backdrop-blur-lg bg-gradient-to-t from-indigo-950 to-transparent z-10">
+          <div className="fixed bottom-0 left-0 right-0 p-6  z-10">
             <div className="max-w-lg mx-auto">
               <button 
                 type="submit" 
